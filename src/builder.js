@@ -1,28 +1,29 @@
 (function($){
-  var fragment = new DocumentFragment(),  //https://developer.mozilla.org/en-US/docs/Web/API/DocumentFragment
-      twin_counter = 0,//pointer for cloned nodes
-      node_elem_container,//helper
-      append_element,//no use
-      that,//context this
-      step = 0,
+  var fragment = new DocumentFragment(),
+      twin_counter = 0,//counter for cloned nodes
       builder = {
+        // Single tag
         stag:function() {
-          node_elem_container = s.tag.call(this,...arguments);
-          this.append(node_elem_container);
+          fragment.appendChild(s.tag.call(this,...arguments));
+          this.append(fragment);
+          s.removeAll(fragment);
           return this;
         },
+        // Multiple tags can be chained
         tag:function(){
           fragment.appendChild(s.tag.call(this,...arguments));
           return this;
         },
+        // Make last element child of element before it
         nest:function(deep) {
-          // TODO: add ability nest all last cloned elements
-          var length = (fragment.childNodes.length-1)-deep;
+          //deep - how many elements nested to each other
+          var length = (fragment.childNodes.length-1);
+          console.log(length);
           if (deep && typeof deep === 'number') {
-            if (deep < length) {
+            if (length - deep >= 0) {
               s.voidNestElements.call(this,deep);
             }else {
-              throw 'Argument in nest() has to be less or equal to '+(length-1);
+              throw 'Argument in nest() has to be less or equal to '+(fragment.childNodes.length-1);
             }
           }else if (deep && deep.isArray() === true) {
             s.voidNestElements.call(this,deep.length);
@@ -31,8 +32,8 @@
           }
           return this;
         },
+        // Takes a group of last twined elements and place them into element before this group
         allIn:function() {//3.2,1 elem will be placed in to 0 elem, if pointer was 3
-          // console.log((fragment.childNodes.length-twin_counter)-arguments[0]);
           if (arguments[0] && fragment.childNodes.length-twin_counter-arguments[0] >= 1 && twin_counter !==0) {
             s.allIn(arguments[0]);
           }else if (arguments[0] && fragment.childNodes.length-twin_counter-arguments[0] < 1 && twin_counter!==0) {
@@ -46,9 +47,9 @@
           twin_counter = 0;
           return this;
         },
+        //Clone elements. Array or Number can be passed, second argument is attribute that will be iterated
         twin:function() {
           //arguments[0] - Array of iterable values, arguments[1] - attribute name
-
           var last_elem = fragment.lastChild,
               a = arguments,
               value;
@@ -65,14 +66,12 @@
             attr:a[1],
             iter:iterator,
           });
-          // s.revealFrag('dir');
           return this;
         },
+        //Print out set of nodes
         print:function () {
-          // console.dir(String(fragment);
           this.append(fragment);
           s.removeAll(fragment);
-          // s.revealFrag('dir');
           return this;
         }
       };
@@ -81,7 +80,6 @@
       twin:function() {
         var element,
             attribute;
-        console.log(this);
         for (var i = 0; i < this.iter; i++) {
           if (!Array.isArray(this.a)) {
             element = this.last.cloneNode(true);
@@ -91,10 +89,7 @@
             attribute = document.createAttribute(this.attr);
             attribute.value = this.a[i].toLowerCase();//???
             element.setAttributeNode(attribute);
-            // console.log(i);
           }
-
-          console.log(i);
           fragment.appendChild(element);
         }
       },
@@ -131,6 +126,7 @@
       },
       voidNestElements:function(deep) {
         var fragment_length = (fragment.childNodes.length-1)-deep;
+        console.log(fragment_length);
         for (var i = fragment.childNodes.length-1; i > fragment_length; i--) {
           fragment.childNodes[i-1].appendChild(fragment.childNodes[i]);
         }
@@ -158,27 +154,12 @@
         }
         return fragment;
       },
-      lastElement:function(object) {
-        // return Object.values(Object.keys(object).length-1);
-        console.log(fragment[fragment.lastChild]);
-        // for (var i = 0; fragment[i] !== fragment.lastChild; i++) {}
-      },
       removeAll:function(obj) {
         // var props = fragment;
         for (var i = 0; i < fragment.childNodes.length; i++) {
           fragment.removeChild(fragment.childNodes[i]);
         }
       },
-      revealFrag:function() {
-        var set = {};
-        console.log(fragment.childNodes[0]);
-        for (var i = 0; i < fragment.childNodes.length; i++) {
-          console.log(fragment.childNodes[i]);
-          set[i] = fragment.childNodes[i];
-        }
-        arguments[0] == 'dir' ? console.dir(set) : console.log(set);
-
-      }
     }
   for(var o in builder){
     $.fn[o] = builder[o];
