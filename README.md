@@ -37,7 +37,7 @@ $('body').tag('div',{'class':'dropdown'})
 .nest(2);
 ```
 `nest()` places tags into each other, **number type argument** specify how many elements become children. If argument not specified, it will make all tag children of first element.
-![nest method](examples/nest1?raw=true "Title")
+![nest method](examples/nest1)
 ![nest method](examples/nest2?raw=true "Title")
 ![nest method](examples/nest3?raw=true "Title")
 #### .twin()
