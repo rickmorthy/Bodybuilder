@@ -42,6 +42,7 @@ $('body').tag('div','Parent',{'class':'parent'})
   .tag('div','Potential child_1',{'class':'child'})
   .tag('div','Potential child_2',{'class':'child'})
   .tag('div','Potential child_3',{'class':'child'})
+  // <- No nest method
   .print();
 
 ```
@@ -51,7 +52,7 @@ $('body').tag('div','Parent',{'class':'parent'})
   .tag('div','Potential child_1',{'class':'child'})
   .tag('div','Potential child_2',{'class':'child'})
   .tag('div','Potential child_3',{'class':'child'})
-  .nest()
+  .nest() // <-Nest method without argument
   .print();
 ```
 ![nest method](examples/nest2.jpeg)
@@ -60,7 +61,7 @@ $('body').tag('div','Parent',{'class':'parent'})
   .tag('div','Potential child_1',{'class':'child'})
   .tag('div','Potential child_2',{'class':'child'})
   .tag('div','Potential child_3',{'class':'child'})
-  nest(1)
+  .nest(1) // <- Nest with argument
   .print();
 ```
 ![nest method](examples/nest3.jpeg)
