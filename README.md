@@ -37,9 +37,34 @@ $('body').tag('div',{'class':'dropdown'})
 .nest(2);
 ```
 `nest()` places tags into each other, **number type argument** specify how many elements become children. If argument not specified, it will make all tag children of first element.
-![nest method](examples/nest1?raw=true "Title")
-![nest method](examples/nest2?raw=true "Title")
-![nest method](examples/nest3?raw=true "Title")
+```javascript
+$('body').tag('div','Parent',{'class':'parent'})
+  .tag('div','Potential child_1',{'class':'child'})
+  .tag('div','Potential child_2',{'class':'child'})
+  .tag('div','Potential child_3',{'class':'child'})
+  // <- No nest method
+  .print();
+
+```
+![nest method](examples/nest1.jpeg)
+```javascript
+$('body').tag('div','Parent',{'class':'parent'})
+  .tag('div','Potential child_1',{'class':'child'})
+  .tag('div','Potential child_2',{'class':'child'})
+  .tag('div','Potential child_3',{'class':'child'})
+  .nest() // <-Nest method without argument
+  .print();
+```
+![nest method](examples/nest2.jpeg)
+```javascript
+$('body').tag('div','Parent',{'class':'parent'})
+  .tag('div','Potential child_1',{'class':'child'})
+  .tag('div','Potential child_2',{'class':'child'})
+  .tag('div','Potential child_3',{'class':'child'})
+  .nest(1) // <- Nest with argument
+  .print();
+```
+![nest method](examples/nest3.jpeg)
 #### .twin()
 ```javascript
 .twin([Array],'value');
