@@ -12,6 +12,9 @@ BodyBuilder is a simple jQuery lib that gives a few tools to add DOM elements in
 BB works with standart jQuery selectors `$('body/.class/#id')` to append them to particular place.
 By chaining methods you can dynamicly create and add DOM elements.
 **Example** :exclamation:
+
+![bootstrap](examples/drop_down.jpeg)
+
 ```javascript
 var employees = ['Leonard','Brady','Melisa','Anastasia','Lucy'],
     button = {"class":"btn btn-secondary dropdown-toggle","type":"button", "id":"dropdownMenuButton", "data-toggle":"dropdown", "aria-haspopup":"true", "aria-expanded":"false"};
